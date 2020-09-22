@@ -12,16 +12,16 @@ class ISelenium(unittest.TestCase):
     # 读入配置文件
     def get_config(self):
         config = configparser.ConfigParser()
-        config.read('../iselenium.ini')
+        config.read('../isselenium.ini')
         return config
 
-    def tearDown(self):
+    def tearDown(self) -> None:
         self.driver.quit()
 
-    def setUp(self):
+    def setUp(self) -> None:
         config = self.get_config()
 
-        # 控制是否采用无界面形式运行自动化测试
+        # 控制是都采用无界面形式运行自动化测试
         try:
             using_headless = os.environ["using_headless"]
         except KeyError:
@@ -37,26 +37,28 @@ class ISelenium(unittest.TestCase):
                                        options=chrome_options)
 
     def test_webui_1(self):
-        """ 测试用例1，验证'今日头条'关键词在百度上的搜索结果
-        """
-
+        '''
+        用例1：验证'今日头条'关键词在百度上的搜索结果
+        :return:
+        '''
         self._test_baidu('今日头条', 'test_webui_1')
 
     def test_webui_2(self):
-        """ 测试用例2， 验证'王者荣耀'关键词在百度上的搜索结果
-        """
-
+        '''
+        用例2：验证'王者荣耀'关键词在百度上的搜索结果
+        :return:
+        '''
         self._test_baidu('王者荣耀', 'test_webui_2')
 
     def _test_baidu(self, search_keyword, testcase_name):
-        """ 测试百度搜索子函数
-
-        :param search_keyword: 搜索关键词 (str)
-        :param testcase_name: 测试用例名 (str)
-        """
-
-        self.driver.get("https://ww.baidu.com")
-        print('打开浏览器，访问 www.baidu.com')
+        '''
+        测试百度搜索
+        :param search_keyword: 搜索关键词（str）
+        :param testcase_name: 测试用例名（str）
+        :return:
+        '''
+        self.driver.get("https://www.baidu.com")
+        print("打开浏览器，访问 百度")
         time.sleep(5)
         assert f'百度一下' in self.driver.title
 
